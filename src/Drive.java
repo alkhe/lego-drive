@@ -3,6 +3,7 @@
 import lejos.nxt.Button;
 import lejos.nxt.ColorSensor;
 import lejos.nxt.ColorSensor.Color;
+import lejos.nxt.LCD;
 import lejos.nxt.Motor;
 import lejos.nxt.NXT;
 import lejos.nxt.NXTRegulatedMotor;
@@ -23,7 +24,7 @@ public class Drive {
 	public static final int SENSOR_3 = 4;
 	public static final int SENSOR_4 = 8;
 	public static final int SENSOR_ALL = 15;
-	public static final double REV = 2.73-0.06;
+	public static final double REV = 2.73 - 0.06;
 
 	// One rotation per second
 	public static final int RPS = 360;
@@ -59,12 +60,14 @@ public class Drive {
 			Thread.sleep(1000);
 		}
 		*/
-		/*// Roundabout Ratio 1.6 
-		setSpeed(MOTOR_A, 600);
-		setSpeed(MOTOR_B, 375);
-		forward(MOTOR_A | MOTOR_B);
-		*/
-		ignore();
+		// Roundabout Ratio 1.6 
+		//setSpeed(MOTOR_A, 600);
+		//setSpeed(MOTOR_B, 340);
+		//forward(MOTOR_A | MOTOR_B);
+			
+			//System.out.println(clRight.getRed() + " " + clRight.getGreen() + " " + clRight.getBlue());
+		
+		//ignore();
 	}
 
 	/**
@@ -101,7 +104,19 @@ public class Drive {
 		if ((motor & MOTOR_C) != 0)
 			c.backward();
 	}
-
+	
+	/**
+	 * @param motor Bitfield of motor to be used
+	 */
+	public static void stop(int motor) {
+		if ((motor & MOTOR_A) != 0)
+			a.stop();
+		if ((motor & MOTOR_B) != 0)
+			b.stop();
+		if ((motor & MOTOR_C) != 0)
+			c.stop();
+	}
+	
 	/**
 	 * @param motor Bitfield of motor to be used
 	 * @param angle Angle rotation difference
@@ -132,9 +147,16 @@ public class Drive {
 	 * @return void
 	 */
 	public static void ignore() {
-		Button.waitForAnyPress();
+		Button.ENTER.waitForPressAndRelease();
 	}
 
+	/**
+	 * @return void
+	 */
+	public static void escape() {
+		Button.ESCAPE.waitForPressAndRelease();
+	}
+	
 	/**
 	 * @return void
 	 */

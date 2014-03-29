@@ -1,10 +1,10 @@
 
 
 public class ParkAction extends Action {
-	private int parkSteps,direction;
+	private int parkSteps, direction;
 	private int forwardAmount = 600;
-	private int stepsTaken = 0,lastIncident = 0;
-	private boolean isSlow,isRound;
+	private int stepsTaken = 0, lastIncident = 0;
+	private boolean isSlow, isRound;
 	
 	public ParkAction(Driver d, int dir, int t) {
 		super(d, Action.LEFT_PARK_ACTION);
