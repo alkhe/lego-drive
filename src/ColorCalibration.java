@@ -13,8 +13,8 @@ public class ColorCalibration {
 		for (int i = 0; i < 1000; i ++)
 		{
 			Color col = color.getRawColor();
-			Drive.print("------------------------------------------------");
-			Drive.print("RED:\t" + col.getRed() + "\nGREEN:\t" + col.getGreen() + "\nBLUE:\t" + col.getBlue());
+			TurnCalibration.print("------------------------------------------------");
+			TurnCalibration.print("RED:\t" + col.getRed() + "\nGREEN:\t" + col.getGreen() + "\nBLUE:\t" + col.getBlue());
 		}
 //
 //		FileOutputStream outRed = null;

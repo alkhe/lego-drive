@@ -2,7 +2,7 @@
 
 public class TurnAction extends Action {
 	final int
-			forwardAmount = 400
+			forwardAmount = Driver.MOTOR_TURN
 		;
 	final float
 			turnAmount = 0.33f // HARDCODE
@@ -16,6 +16,12 @@ public class TurnAction extends Action {
 
 	public void act(int leftColor,int rightColor) {
 		if (step==0) {
+			try {
+				Thread.sleep(1000);
+			}
+			catch (Exception e) {
+				
+			}
 			pivot = false;
 			leftMotor = 1;
 			rightMotor = 1;

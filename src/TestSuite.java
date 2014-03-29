@@ -18,7 +18,7 @@ public class TestSuite {
 		testRoundabout(340, 600);
 		testColor();
 		testColorDetect();
-		Drive.ignore();
+		TurnCalibration.ignore();
 	}
 	
 	/**
@@ -27,12 +27,12 @@ public class TestSuite {
 	
 	public static void testRoundabout(int leftMotor, int rightMotor) {
 		System.out.println("Test Roundabout");
-		Drive.ignore();
-		Drive.setSpeed(Drive.MOTOR_A, rightMotor);
-		Drive.setSpeed(Drive.MOTOR_B, leftMotor);
-		Drive.forward(Drive.MOTOR_A | Drive.MOTOR_B);
-		Drive.ignore();
-		Drive.stop(Drive.MOTOR_ALL);
+		TurnCalibration.ignore();
+		TurnCalibration.setSpeed(TurnCalibration.MOTOR_A, rightMotor);
+		TurnCalibration.setSpeed(TurnCalibration.MOTOR_B, leftMotor);
+		TurnCalibration.forward(TurnCalibration.MOTOR_A | TurnCalibration.MOTOR_B);
+		TurnCalibration.ignore();
+		TurnCalibration.stop(TurnCalibration.MOTOR_ALL);
 		LCD.clear();
 	}
 	
@@ -79,8 +79,8 @@ public class TestSuite {
 		};
 		
 		
-		ColorSensor csLeft = new ColorSensor(SensorPort.S1);
-		ColorSensor csRight = new ColorSensor(SensorPort.S2);
+		ColorSensor csLeft = new ColorSensor(SensorPort.S1,Color.RED);
+		ColorSensor csRight = new ColorSensor(SensorPort.S2,Color.RED);
 		csLeft.setLow(0); csLeft.setHigh(255);
 		csRight.setLow(0); csRight.setHigh(255);
 		
@@ -88,7 +88,7 @@ public class TestSuite {
 		ColorTest left = new ColorTest(csLeft);
 		
 		System.out.println("Test Color");
-		Drive.ignore();
+		TurnCalibration.ignore();
 		
 		for (int i = 1; i > -1; i++) {
 			right.process(i);
@@ -150,7 +150,7 @@ public class TestSuite {
 		int colorRight;
 		
 		System.out.println("Test Color Detect");
-		Drive.ignore();
+		TurnCalibration.ignore();
 		
 		for (int i = 1; i > -1; i++) {
 			colorLeft = ColorIdentifier.identify1(csLeft.getColor());

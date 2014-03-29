@@ -18,7 +18,7 @@ public class CorrectionAction extends Action {
 		action = a;
 		lastIncident = (li<1) ? 1 : li;
 		//correctionSteps = (int) (50/Math.sqrt(li/500.0));
-		correctionSteps = 60 + ((round) ? 30 : 0);// + (int) (Math.asin(CORRECTION_FACTOR/lastIncident)/Math.PI*180);
+		correctionSteps = 60;// + (int) (Math.asin(CORRECTION_FACTOR/lastIncident)/Math.PI*180);
 		direction = dir;
 	}
 	

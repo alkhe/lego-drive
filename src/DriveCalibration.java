@@ -10,7 +10,7 @@ import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
 import lejos.nxt.addon.SensorSelector;
 
-public class Drive {
+public class DriveCalibration {
 
 	// Bitfields for motors
 	public static final int MOTOR_A = 1;
@@ -24,7 +24,7 @@ public class Drive {
 	public static final int SENSOR_3 = 4;
 	public static final int SENSOR_4 = 8;
 	public static final int SENSOR_ALL = 15;
-	public static final double REV = 2.73 - 0.06;
+	public static final double REV = 2.75;
 
 	// One rotation per second
 	public static final int RPS = 360;
@@ -39,27 +39,32 @@ public class Drive {
 
 	public static void main(String[] args) throws InterruptedException {
 		//forward(MOTOR_A | MOTOR_B);
-		/*ignore();
-		int s = 1;
-		int p = 300;
+		ignore();
+		float s = 0;
+		int p = 500;
 		float calib = 0;
 		ColorSensor c1 = new ColorSensor(SensorPort.S1,Color.WHITE);
 		ColorSensor c2 = new ColorSensor(SensorPort.S2,Color.WHITE);
 		c1.setLow(0); c1.setHigh(255);
 		c2.setLow(0); c2.setHigh(255);
-		setSpeed(MOTOR_A | MOTOR_B, p);
+		setSpeed(MOTOR_A, p);
+		setSpeed(MOTOR_B, p);
 		while (true) {
-			if (true) {
-				Color color = c1.getColor();
-				System.out.println("Color");
-				System.out.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + ColorIdentifier.identify1(color));
-				color = c2.getColor();
-				System.out.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + ColorIdentifier.identify2(color));
-				System.out.println();
+			int b = Button.waitForAnyPress();
+			if (b==Button.ID_ENTER) {
+				rotate(MOTOR_A, (int) (5*360*(REV+s)));
+				rotate(MOTOR_B, (int) (-5*360*(REV+s)));
 			}
-			Thread.sleep(1000);
+			
+			if (b==Button.ID_LEFT) {
+				s -= 0.01;
+			}
+			else if (b==Button.ID_RIGHT) {
+				s += 0.01;
+			}
+			System.out.println(s);
 		}
-		*/
+		
 		// Roundabout Ratio 1.6 
 		//setSpeed(MOTOR_A, 600);
 		//setSpeed(MOTOR_B, 340);

@@ -4,10 +4,13 @@ import lejos.nxt.NXTRegulatedMotor;
 public class Driver {
 	// Path is an n x 4 array
 	// Node (0-71), Next Node, Turn, Length
-	private final float MOTOR_SPEED = 600f;
-	private final float MOTOR_SPIN = 2.67f;
+	public static final float MOTOR_SPEED = 400f;
+	public static final float MOTOR_SPIN = 2.74f; // Spin factor (needs to be more)
+	public static final int MOTOR_TURN = 480; // Red line to center of next road
+	public static final int MOTOR_PARK = 60; // Road to parking spot (needs to be more)
 	
 	int[][] path;
+	int[] pcolorl,pcolorr;
 	int currentPath;
 	NXTRegulatedMotor leftMotor,rightMotor;
 	ColorSensor leftSensor,rightSensor;
@@ -21,18 +24,32 @@ public class Driver {
 		leftSensor = ls;
 		rightSensor = rs;
 		currentAction = null;
+		pcolorl = new int[10];
+		
+		for (int i=0; i<path.length; i++) {
+			if (path[i][2]==0 || path[i][2]==-1 || path[i][2]==1)
+				path[i][3] = path[i][3]*15/8;
+			else if (path[i][2]==2 || path[i][2]==-2)
+				path[i][3] = path[i][3]*17/16;
+			else
+				path[i][3] = path[i][3]*14/16;
+		}
 	}
 	
 	public void run() {
 		if (path!=null && currentPath>=path.length) return; // End path for now
 		
 		if (currentAction==null) {
-			if (path[currentPath][2]==-2 || path[currentPath][2]==2) {
+			if (path[currentPath][2]==-3 || path[currentPath][2]==3) {
+				System.out.println("PF");
+				currentAction = new FinishAction(this,path[currentPath][2],path[currentPath][3]);
+			}
+			else if (path[currentPath][2]==-2 || path[currentPath][2]==2) {
 				System.out.println("PA");
 				currentAction = new ParkAction(this,path[currentPath][2],path[currentPath][3]);
 			}
 			else {
-				currentAction = new DriveAction(this);
+				currentAction = new DriveAction(this,path[currentPath][3]);
 			}
 		}
 		
@@ -55,7 +72,7 @@ public class Driver {
 		
 		// Set the motors
 		leftMotor.setSpeed(Math.abs(leftMotorSpeed));
-		rightMotor.setSpeed(Math.abs(rightMotorSpeed));
+		rightMotor.setSpeed(Math.abs(rightMotorSpeed)+1);
 		
 		if (currentAction.pivot) { // Pivot in place
 			int rotateMotor = (int) (currentAction.rotate * MOTOR_SPIN);
@@ -116,20 +133,20 @@ public class Driver {
 			5, 6, 10, 11, 13, 14, 26, 31, 33, 34, 35, 36, 38, 39, 52, 54, 68, 70
 	};
 	final int[] round = {
-			5, 6, 10, 11, 34, 35, 36
+			10, 11, 5, 6, 34, 35, 36
 	};
 	public boolean getSlow(int p) {
-		return contains(slow,p); // TODO
+		return arrayFind(slow,path[p][1])>=0;
 	}
 	
-	public boolean getRound(int p) {
-		return contains(round,p);
+	public int getRound(int p) {
+		return arrayFind(round,path[p][1]);
 	}
 	
-	public boolean contains(int[] a,int b) {
+	public int arrayFind(int[] a,int b) {
 		for (int i=0; i<a.length; i++) {
-			if (a[i]==b) return true;
+			if (a[i]==b) return i;
 		}
-		return false;
+		return -1;
 	}
 }

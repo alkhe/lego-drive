@@ -39,6 +39,7 @@ public abstract class Action {
 		;
 	
 	public Action(Driver d,int t) {
+		System.out.println(d.getCurrentPath() + " " + t);
 		this.driver = d;
 		this.type = t;
 	}
