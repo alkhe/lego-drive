@@ -1,10 +1,13 @@
-package edu.mbhs.lego.drive;
+
 
 import lejos.nxt.Button;
+import lejos.nxt.ColorSensor;
+import lejos.nxt.ColorSensor.Color;
 import lejos.nxt.Motor;
 import lejos.nxt.NXT;
 import lejos.nxt.NXTRegulatedMotor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.addon.SensorSelector;
 
 public class Drive {
 
@@ -20,6 +23,7 @@ public class Drive {
 	public static final int SENSOR_3 = 4;
 	public static final int SENSOR_4 = 8;
 	public static final int SENSOR_ALL = 15;
+	public static final double REV = 2.73-0.06;
 
 	// One rotation per second
 	public static final int RPS = 360;
@@ -32,8 +36,35 @@ public class Drive {
 	// Maximum speed of motors: Do not calculate max speed of individual motors, may not return full potential
 	public static final float MAX_SPEED = 1000.f;
 
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws InterruptedException {
+		//forward(MOTOR_A | MOTOR_B);
+		/*ignore();
+		int s = 1;
+		int p = 300;
+		float calib = 0;
+		ColorSensor c1 = new ColorSensor(SensorPort.S1,Color.WHITE);
+		ColorSensor c2 = new ColorSensor(SensorPort.S2,Color.WHITE);
+		c1.setLow(0); c1.setHigh(255);
+		c2.setLow(0); c2.setHigh(255);
+		setSpeed(MOTOR_A | MOTOR_B, p);
+		while (true) {
+			if (true) {
+				Color color = c1.getColor();
+				System.out.println("Color");
+				System.out.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + ColorIdentifier.identify1(color));
+				color = c2.getColor();
+				System.out.println(color.getRed() + " " + color.getGreen() + " " + color.getBlue() + " " + ColorIdentifier.identify2(color));
+				System.out.println();
+			}
+			Thread.sleep(1000);
+		}
+		*/
+		/*// Roundabout Ratio 1.6 
+		setSpeed(MOTOR_A, 600);
+		setSpeed(MOTOR_B, 375);
+		forward(MOTOR_A | MOTOR_B);
+		*/
+		ignore();
 	}
 
 	/**
@@ -64,11 +95,11 @@ public class Drive {
 	 */
 	public static void backward(int motor) {
 		if ((motor & MOTOR_A) != 0)
-			a.forward();
+			a.backward();
 		if ((motor & MOTOR_B) != 0)
-			b.forward();
+			b.backward();
 		if ((motor & MOTOR_C) != 0)
-			c.forward();
+			c.backward();
 	}
 
 	/**
@@ -77,11 +108,11 @@ public class Drive {
 	 */
 	public static void rotate(int motor, int angle) {
 		if ((motor & MOTOR_A) != 0)
-			a.rotate(angle);
+			a.rotate(angle, true);
 		if ((motor & MOTOR_B) != 0)
-			b.rotate(angle);
+			b.rotate(angle, true);
 		if ((motor & MOTOR_C) != 0)
-			c.rotate(angle);
+			c.rotate(angle, true);
 	}
 
 	/**
