@@ -35,7 +35,7 @@ public class DriveAction extends Action {
 				|| leftColor==ColorIdentifier.GRAY
 				|| leftColor==ColorIdentifier.BLUE) {
 			System.out.println("CL " + leftColor);
-			nextAction = new CorrectionAction(driver,this,lastIncident,-1,isRound);
+			nextAction = new RestAction(driver,new CorrectionAction(driver,this,lastIncident,-1,isRound),1000);
 			lastIncident = 0;
 		}
 		else if (rightColor==ColorIdentifier.WHITE
@@ -43,7 +43,7 @@ public class DriveAction extends Action {
 				|| rightColor==ColorIdentifier.GRAY
 				|| rightColor==ColorIdentifier.BLUE) {
 			System.out.println("CR " + rightColor);
-			nextAction = new CorrectionAction(driver,this,lastIncident,1,isRound);
+			nextAction = new RestAction(driver,new CorrectionAction(driver,this,lastIncident,1,isRound),1000);
 			lastIncident = 0;
 		}
 		

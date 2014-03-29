@@ -15,7 +15,7 @@ public class TestSuite {
 	}
 	
 	public static void main(String[] args) {
-		testRoundabout(280, 600);
+		testRoundabout(340, 600);
 		testColor();
 		testColorDetect();
 		Drive.ignore();
@@ -81,6 +81,8 @@ public class TestSuite {
 		
 		ColorSensor csLeft = new ColorSensor(SensorPort.S1);
 		ColorSensor csRight = new ColorSensor(SensorPort.S2);
+		csLeft.setLow(0); csLeft.setHigh(255);
+		csRight.setLow(0); csRight.setHigh(255);
 		
 		ColorTest right = new ColorTest(csRight);
 		ColorTest left = new ColorTest(csLeft);
